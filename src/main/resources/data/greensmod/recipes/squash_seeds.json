@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "minecraft:wheat_seeds"
+    },
+    "X": {
+      "item": "minecraft:yellow_dye"
+    },
+    "Y": {
+      "item": "minecraft:gray_dye"
+    }
+  },
+  "pattern": [
+    "Y#X"
+  ],
+  "result": {
+    "count": 4,
+    "item": "greensmod:squash_seeds"
+  }
+}

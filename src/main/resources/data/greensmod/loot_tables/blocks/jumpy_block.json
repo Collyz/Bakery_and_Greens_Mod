@@ -1,0 +1,14 @@
+{
+  "type": "greensmod:block.custom",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "greensmod:jumpy_block"
+        }
+      ]
+    }
+  ]
+}

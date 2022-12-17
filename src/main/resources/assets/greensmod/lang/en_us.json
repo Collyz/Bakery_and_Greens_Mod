@@ -1,0 +1,42 @@
+{
+  "item.greensmod.eight_ball": "Eight Ball",
+
+  "item.greensmod.baguette": "Baguette",
+  "item.greensmod.empty_jar": "Empty Jar",
+
+  "item.greensmod.broccoli": "Broccoli",
+  "item.greensmod.cabbage": "Cabbage",
+  "item.greensmod.cucumber": "Cucumber",
+  "item.greensmod.radish": "Radish",
+  "item.greensmod.squash": "Squash",
+  "item.greensmod.eggplant": "Eggplant",
+  "item.greensmod.mango": "Mango",
+  "item.greensmod.peach": "Peach",
+  "item.greensmod.pear": "Pear",
+  "item.greensmod.grapes": "Grapes",
+  "item.greensmod.blueberry": "Blueberry",
+  "item.greensmod.strawberry": "Strawberry",
+  "item.greensmod.pomegranate": "Pomegranate",
+  "item.greensmod.tomato": "Tomato",
+  "item.greensmod.banana": "Banana",
+
+  "item.greensmod.broccoli_seeds": "Broccoli Seeds",
+  "item.greensmod.cabbage_seeds": "Cabbage Seeds",
+  "item.greensmod.cucumber_seeds": "Cucumber Seeds",
+  "item.greensmod.radish_seeds": "Radish Seeds",
+  "item.greensmod.squash_seeds": "Squash Seeds",
+  "item.greensmod.eggplant_seeds": "Eggplant Seeds",
+  "item.greensmod.mango_seeds": "Mango Seeds",
+  "item.greensmod.peach_seeds": "Peach Seeds",
+  "item.greensmod.pear_seeds": "Pear Seeds",
+  "item.greensmod.grapes_seeds": "Grapes Seeds",
+  "item.greensmod.blueberry_seeds": "Blueberry Seeds",
+  "item.greensmod.strawberry_seeds": "Strawberry Seeds",
+  "item.greensmod.pomegranate_seeds": "Pomegranate Seeds",
+  "item.greensmod.tomato_seeds": "Tomato Seeds",
+  "item.greensmod.banana_seeds": "Banana Seeds",
+  
+  "block.greensmod.jumpy_block": "Jumpy Block",
+
+  "itemgroup.more_greens_tab": "Greens Tab"
+}

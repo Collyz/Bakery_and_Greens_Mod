@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "minecraft:wheat_seeds"
+    },
+    "X": {
+      "item": "minecraft:green_dye"
+    }
+  },
+  "pattern": [
+    "#X"
+  ],
+  "result": {
+    "count": 4,
+    "item": "greensmod:broccoli_seeds"
+  }
+}

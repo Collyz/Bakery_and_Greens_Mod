@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "greensmod:block/jumpy_block"
+  }
+}
