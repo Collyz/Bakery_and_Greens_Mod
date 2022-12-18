@@ -1,6 +1,7 @@
 package net.collywobbles.greensmod;
 
 import com.mojang.logging.LogUtils;
+import net.collywobbles.greensmod.block.entity.ModBlockEntities;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -28,6 +29,8 @@ public class GreensMod
         ModItems.register(modEventBus);
         //Registering mod blocks
         ModBlocks.register(modEventBus);
+
+       // ModBlockEntities.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
