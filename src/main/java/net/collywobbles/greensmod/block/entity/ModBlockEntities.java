@@ -11,15 +11,14 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ModBlockEntities {
-
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, GreensMod.MOD_ID);
 
     public static final RegistryObject<BlockEntityType<BreadOvenBlockEntity>> BREAD_OVEN =
-            BLOCK_ENTITIES.register("bread_oven", () ->
+            BLOCK_ENTITIES.register("gem_infusing_station", () ->
                     BlockEntityType.Builder.of(BreadOvenBlockEntity::new,
                             ModBlocks.BREAD_OVEN_BLOCK.get()).build(null));
-    public static void register(IEventBus eventBus){
+    public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }
 }

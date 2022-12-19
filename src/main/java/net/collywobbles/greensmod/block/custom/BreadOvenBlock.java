@@ -31,12 +31,12 @@ public class BreadOvenBlock extends BaseEntityBlock{
         super(properties);
     }
 
-    private static final VoxelShape Shape =
-            Block.box(0, 0, 0, 16, 10 ,16);
+    private static final VoxelShape SHAPE =
+            Block.box(0, 0, 0, 16, 10, 16);
 
     @Override
     public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
-        return Shape;
+        return SHAPE;
     }
 
     @Override
@@ -68,9 +68,9 @@ public class BreadOvenBlock extends BaseEntityBlock{
 
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
-        if(!(pState.getBlock().equals(pNewState.getBlock()))){
+        if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if(blockEntity instanceof BreadOvenBlockEntity){
+            if (blockEntity instanceof BreadOvenBlockEntity) {
                 ((BreadOvenBlockEntity) blockEntity).drops();
             }
         }
@@ -100,7 +100,9 @@ public class BreadOvenBlock extends BaseEntityBlock{
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, ModBlockEntities.BREAD_OVEN.get(), BreadOvenBlockEntity::tick);
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
+                                                                  BlockEntityType<T> type) {
+        return createTickerHelper(type, ModBlockEntities.BREAD_OVEN.get(),
+                BreadOvenBlockEntity::tick);
     }
 }

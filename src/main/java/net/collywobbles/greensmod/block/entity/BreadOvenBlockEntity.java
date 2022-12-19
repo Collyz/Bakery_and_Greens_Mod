@@ -1,6 +1,7 @@
 package net.collywobbles.greensmod.block.entity;
 
 import net.collywobbles.greensmod.item.ModItems;
+import net.collywobbles.greensmod.screen.BreadOvenMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -29,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class BreadOvenBlockEntity extends BlockEntity implements MenuProvider {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(3){
+    private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
         @Override
         protected void onContentsChanged(int slot) {
             setChanged();
@@ -47,7 +48,7 @@ public class BreadOvenBlockEntity extends BlockEntity implements MenuProvider {
         this.data = new ContainerData() {
             @Override
             public int get(int index) {
-                return switch (index){
+                return switch (index) {
                     case 0 -> BreadOvenBlockEntity.this.progress;
                     case 1 -> BreadOvenBlockEntity.this.maxProgress;
                     default -> 0;
@@ -56,15 +57,15 @@ public class BreadOvenBlockEntity extends BlockEntity implements MenuProvider {
 
             @Override
             public void set(int index, int value) {
-                switch (index){
+                switch (index) {
                     case 0 -> BreadOvenBlockEntity.this.progress = value;
                     case 1 -> BreadOvenBlockEntity.this.maxProgress = value;
-                };
+                }
             }
 
             @Override
             public int getCount() {
-                return 1;
+                return 2;
             }
         };
     }
@@ -77,14 +78,15 @@ public class BreadOvenBlockEntity extends BlockEntity implements MenuProvider {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-        return null;
+        return new BreadOvenMenu(id, inventory, this, this.data);
     }
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(cap.equals(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)){
+        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return lazyItemHandler.cast();
         }
+
         return super.getCapability(cap, side);
     }
 
@@ -101,41 +103,44 @@ public class BreadOvenBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        tag.put("inventory", itemHandler.serializeNBT());
-        super.saveAdditional(tag);
+    protected void saveAdditional(CompoundTag nbt) {
+        nbt.put("inventory", itemHandler.serializeNBT());
+        nbt.putInt("bread_oven.progress", this.progress);
 
+        super.saveAdditional(nbt);
     }
 
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
         itemHandler.deserializeNBT(nbt.getCompound("inventory"));
+        progress = nbt.getInt("bread_oven.progress");
     }
 
-    public void drops(){
+    public void drops() {
         SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
-        for(int i = 0; i < itemHandler.getSlots(); i++){
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
             inventory.setItem(i, itemHandler.getStackInSlot(i));
         }
+
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, BreadOvenBlockEntity pEntity) {
-        if(level.isClientSide){
+        if(level.isClientSide()) {
             return;
         }
 
-        if(hasRecipe(pEntity)){
+        if(hasRecipe(pEntity)) {
             pEntity.progress++;
             setChanged(level, pos, state);
 
-            if(pEntity.progress >= pEntity.maxProgress){
+            if(pEntity.progress >= pEntity.maxProgress) {
                 craftItem(pEntity);
-            }else{
-                pEntity.resetProgress();
-                setChanged(level, pos, state);
             }
+        } else {
+            pEntity.resetProgress();
+            setChanged(level, pos, state);
         }
     }
 
@@ -144,26 +149,26 @@ public class BreadOvenBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private static void craftItem(BreadOvenBlockEntity pEntity) {
-        if (hasRecipe(pEntity)) {
-            pEntity.itemHandler.extractItem(1,1,false);{
-                pEntity.itemHandler.setStackInSlot(2, new ItemStack(ModItems.BANANA_SEEDS.get(),
-                        pEntity.itemHandler.getStackInSlot(2).getCount() + 1));
 
-                pEntity.resetProgress();
-            }
+        if(hasRecipe(pEntity)) {
+            pEntity.itemHandler.extractItem(1, 1, false);
+            pEntity.itemHandler.setStackInSlot(2, new ItemStack(ModItems.BROCCOLI_SEEDS.get(),
+                    pEntity.itemHandler.getStackInSlot(2).getCount() + 1));
+
+            pEntity.resetProgress();
         }
     }
 
-    private static boolean hasRecipe(BreadOvenBlockEntity pEntity) {
-        SimpleContainer inventory = new SimpleContainer(pEntity.itemHandler.getSlots());
-        for(int i = 0; i < pEntity.itemHandler.getSlots(); i++){
-            inventory.setItem(i, pEntity.itemHandler.getStackInSlot(i));
+    private static boolean hasRecipe(BreadOvenBlockEntity entity) {
+        SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
+        for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
+            inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
         }
 
-        boolean hasRawFlourInFirstSlot = pEntity.itemHandler.getStackInSlot(1).getItem() == ModItems.BANANA.get();
-        return hasRawFlourInFirstSlot && canInsertAmountIntoOutputSlot(inventory) &&
-                canInsertItemIntoOutputSlot(inventory, new ItemStack(ModItems.BANANA_SEEDS.get(), 1));
+        boolean hasBroccoliInFirstSlot = entity.itemHandler.getStackInSlot(1).getItem() == ModItems.BROCCOLI.get();
 
+        return hasBroccoliInFirstSlot && canInsertAmountIntoOutputSlot(inventory) &&
+                canInsertItemIntoOutputSlot(inventory, new ItemStack(ModItems.BROCCOLI.get(), 1));
     }
 
     private static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack stack) {

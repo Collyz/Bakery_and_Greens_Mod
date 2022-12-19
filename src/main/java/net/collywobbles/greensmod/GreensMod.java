@@ -2,6 +2,9 @@ package net.collywobbles.greensmod;
 
 import com.mojang.logging.LogUtils;
 import net.collywobbles.greensmod.block.entity.ModBlockEntities;
+import net.collywobbles.greensmod.screen.BreadOvenScreen;
+import net.collywobbles.greensmod.screen.ModMenuTypes;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -25,12 +28,11 @@ public class GreensMod
     public GreensMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        //Registering mod items
         ModItems.register(modEventBus);
-        //Registering mod blocks
         ModBlocks.register(modEventBus);
 
-       // ModBlockEntities.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -48,7 +50,7 @@ public class GreensMod
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-
+            MenuScreens.register(ModMenuTypes.BREAD_OVEN_MENU.get(), BreadOvenScreen::new);
         }
     }
 }
